@@ -4,33 +4,37 @@
       <th>ID</th>
       <th>Matricula</th>
       <th>Nombre</th>
-      <th>Status</th>
+      <th>Estado</th>
       <th>Hora</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let dato of scannedData; let i = index">
-      <th scope="row"> {{i+1}} </th>
-      <td> {{dato.Matricula}} </td>
-      <td> {{dato.Nombre}} </td>
-      <td> {{dato.Status}} </td>
-      <td> {{dato.Hora}} </td>
-  </tr>
+    <ng-container *ngFor="let dato of _Datos_Leidos; let i = index">
+        <tr *ngIf="isPresent(dato)">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ dato.Matricula }}</td>
+          <td>{{ dato.Nombre }}</td>
+          <td> {{dato.Estado}} </td>
+          <td> {{dato.Hora}} </td>
+        </tr>
+    </ng-container>
   </tbody>
 </table>
 
+<div *ngFor="let item of _Lista_Asistencia" >
+  <p> matr {{item.Matricula}} </p>
+  <p> matr {{item.Nombre}} </p>
+</div>
+
+
 <div>
   <h2>Último dato escaneado:</h2>
-  <p>Matrícula: {{ getMatricula() || 'No hay datos' }}</p>
-  <p>Nombre: {{ getNombre() || 'No hay datos' }}</p>
-  <p>Status: {{ getStatus() || 'No hay datos' }}</p>
+  <p>Matrícula: {{ getMatricula() || "No hay datos" }}</p>
+  <p>Nombre: {{ getNombre() || "No hay datos" }}</p>
+  <p>Status: {{ getStatus() || "No hay datos" }}</p>
 </div>
 
-<h2>Lista Asistencia a Comparar</h2>
 
-<div *ngFor="let item of firestoreData">
-  <p>Matricula: {{ item.Matricula }}</p>
-  <p>Nombre: {{ item.Nombre }}</p>
-  <p>Status: {{ item.Status }}</p>
-  <p>Hora: {{ item.carrera }}</p>
-</div>
+
+
+
