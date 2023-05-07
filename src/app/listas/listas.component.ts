@@ -5,7 +5,7 @@ import { FirestoreService } from './firestore.service';
 interface Estructura {
   Matricula: string;
   Nombre: string;
-  Status: string;
+  Estado: string;
 }
 
 @Component({
@@ -14,43 +14,60 @@ interface Estructura {
   styleUrls: ['./listas.component.css'],
 })
 export class ListasComponent implements OnInit {
-  scannedData: Estructura[] | any = {
+  _Datos_Leidos: Estructura[] | any = {
     Matricula: '',
     Nombre: '',
-    Status: '',
+    Estado: '',
     Hora: '',
   };
-  firestoreData: any[] = [];
+  _Lista_Asistencia: any[] = [];
+  _NrcMateria = '';
+  _Carrera = '';
 
   lastMatriculaScanned: string | any = '';
   lastNombreScanned: string | any;
   lastStatusScanned: string | any = '';
 
-
   constructor(
-    public dataService: DataService,
-    private firestoreService: FirestoreService
+    public _dataService: DataService,
+    private _firestoreService: FirestoreService
   ) {}
 
   async ngOnInit() {
     // Obtiene los datos leídos del array scannedData del servicio
-    let arreglo: Estructura[] = this.dataService.getScannedData();
-    this.scannedData = arreglo;
-    this.firestoreService
-      .getFirestoreData()
-      .then((data) => (this.firestoreData = data));
+    let recibir_Datos = this._dataService.getScannedData();
+    this._Datos_Leidos = recibir_Datos;
 
-    this.dataService.MatriculaObservable.subscribe((matricula: string) => {
+    this._firestoreService
+      .getNrcByHorario()
+      .then((_Data) => (this._NrcMateria = _Data));
+
+    this._firestoreService
+      .getCarrera()
+      .then((_Data) => (this._Carrera = _Data));
+
+    this._firestoreService
+      .getFirestoreData(this._NrcMateria, this._Carrera)
+      .then((_Data) => (this._Lista_Asistencia = _Data));
+
+    this._dataService.MatriculaObservable.subscribe((matricula: string) => {
       this.lastMatriculaScanned = matricula;
     });
 
-    this.dataService.NombreObservable.subscribe((nombre: string) => {
+    this._dataService.NombreObservable.subscribe((nombre: string) => {
       this.lastNombreScanned = nombre;
     });
 
-    this.dataService.StatusObservable.subscribe((status: string) => {
+    this._dataService.StatusObservable.subscribe((status: string) => {
       this.lastStatusScanned = status;
     });
+  }
+
+  isPresent(matricula_Recibida: Estructura): boolean {
+    const found = this._Lista_Asistencia.find(
+      (Lista_De_Asistencia) => Lista_De_Asistencia.Matricula === matricula_Recibida.Matricula
+    );
+    return !!found;
   }
 
   getMatricula() {
@@ -62,6 +79,6 @@ export class ListasComponent implements OnInit {
   }
 
   getStatus() {
-    return this.lastStatusScanned
+    return this.lastStatusScanned;
   }
 }
