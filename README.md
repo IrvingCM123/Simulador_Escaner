@@ -31,4 +31,4 @@ scanError->Emitted when some error occurs during the scan process.
 scanFailure->Emitted when the scanner couldn't decode any result from the media stream.
 
 scanComplete->Emitted after any scan attempt, no matter what.
-     
+      
