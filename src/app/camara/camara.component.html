@@ -1,0 +1,10 @@
+<zxing-scanner class="qr-scanner" style="width: 500px;"
+  [enable]="scannerEnabled"
+  [device]="myDevice"
+  (camerasFound)="camerasFoundHandler($event)"
+  (scanSuccess)="scanSuccessHandler($event)"
+></zxing-scanner>
+
+<div *ngIf="showScanSuccessMessage" class="scan-success-message">
+  El código ha sido escaneado correctamente
+</div>

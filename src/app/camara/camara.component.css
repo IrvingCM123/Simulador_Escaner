@@ -1,0 +1,50 @@
+.scan-success-message {
+  position: fixed;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #00ff00;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  animation: fadeOut 2s ease-in-out forwards;
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.qr-scanner {
+  position: relative;
+}
+
+.qr-scanner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  border: 2px solid green;
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 999;
+}
+
+.qr-scanner.scan {
+  animation: qr-scan 2s infinite;
+}
+
+@keyframes qr-scan {
+  0% {
+    box-shadow: 0 0 10px 0px rgba(0, 255, 0, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 20px 10px rgba(0, 255, 0, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 10px 0px rgba(0, 255, 0, 0.7);
+  }
+}

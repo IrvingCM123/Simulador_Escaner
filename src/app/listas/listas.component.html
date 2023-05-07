@@ -1,0 +1,28 @@
+<table>
+  <thead>
+    <tr>
+      <th>Matricula</th>
+      <th>Nombre</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let dato of scannedData">
+        <th> Matricula: {{dato.Matricula}} </th>
+        <th> Nombre: {{dato.Nombre}} </th>
+        <th> Status: {{dato.Status}} </th>
+    </tr>
+    <tr>
+      <td>Último escaneo:</td>
+      <td>{{ lastScannedData.Matricula }}</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+<div *ngFor="let item of firestoreData">
+  <p>Matricula: {{ item.Matricula }}</p>
+  <p>Nombre: {{ item.Nombre }}</p>
+  <p>Status: {{ item.Status }}</p>
+  <p>Hora: {{ item.carrera }}</p>
+</div>
