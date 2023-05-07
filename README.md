@@ -1,32 +1,3 @@
-# Lector QR con Angular 13
-
-Este ejemplo de realizar un lector de códigos QR o código de barra con Angular 13 es muy rápido.
-
-He tardado un par de horas de descubrir cómo poder seleccionar la cámara y ese es el motivo de hacer este repositorio.
-
-Para ejecutarlo, cuando tengas clonado el repositorio ejecuta ``npm install``
-
-![screenshot de la aplicación de lector de código QR en Angular 13](https://github.com/fjmduran/qr-reader/blob/master/src/assets/img.jpg?raw=true)
-
-Uso la versión 3.5.0 de la librería [ngx-scanner](https://github.com/zxing-js/ngx-scanner)
-
-Para obtener los periféricos de captura de imagen de tu dispositivo puedes ejecutar:
-
-    navigator.mediaDevices.enumerateDevices().then((devices) => {
-      for (var i = 0; i < devices.length; i++) {
-        var device = devices[i];
-        if (device.kind === 'videoinput') {
-          console.log(device);
-          this.myDevice = devices[1];          
-        }
-      }
-      console.log(this.myDevice);
-    });
-
-No obstante la librería ya te facilita el método ``camerasFound``
-
-Aquí tienes todas las propiedas del componente:
-
     <zxing-scanner
     [enable]="scannerEnabled" 
     [(device)]="desiredDevice"

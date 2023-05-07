@@ -14,27 +14,54 @@ interface Estructura {
   styleUrls: ['./listas.component.css'],
 })
 export class ListasComponent implements OnInit {
-  scanned: string[] | any;
-  scannedData: string[] | Estructura[] | any = { Matricula: '', Nombre: '', Status: '' };
+  scannedData: Estructura[] | any = {
+    Matricula: '',
+    Nombre: '',
+    Status: '',
+    Hora: '',
+  };
   firestoreData: any[] = [];
-  lastScannedData: any = '';
+
+  lastMatriculaScanned: string | any = '';
+  lastNombreScanned: string | any;
+  lastStatusScanned: string | any = '';
+
 
   constructor(
-    private dataService: DataService,
+    public dataService: DataService,
     private firestoreService: FirestoreService
   ) {}
 
   async ngOnInit() {
     // Obtiene los datos leídos del array scannedData del servicio
-    this.scannedData = this.dataService.getScannedData();
-    console.log(this.scanned);
-    this.firestoreData = await this.firestoreService.getFirestoreData();
-    this.lastScannedData = this.dataService.getLastScannedData();
+    let arreglo: Estructura[] = this.dataService.getScannedData();
+    this.scannedData = arreglo;
+    this.firestoreService
+      .getFirestoreData()
+      .then((data) => (this.firestoreData = data));
+
+    this.dataService.MatriculaObservable.subscribe((matricula: string) => {
+      this.lastMatriculaScanned = matricula;
+    });
+
+    this.dataService.NombreObservable.subscribe((nombre: string) => {
+      this.lastNombreScanned = nombre;
+    });
+
+    this.dataService.StatusObservable.subscribe((status: string) => {
+      this.lastStatusScanned = status;
+    });
   }
 
-  variableExisteEnFirestore() {
-    return this.firestoreData.some(
-      (data: { Matricula: string }) => data.Matricula === this.lastScannedData
-    );
+  getMatricula() {
+    return this.lastMatriculaScanned;
+  }
+
+  getNombre() {
+    return this.lastNombreScanned;
+  }
+
+  getStatus() {
+    return this.lastStatusScanned
   }
 }
