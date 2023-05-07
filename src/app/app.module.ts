@@ -20,9 +20,10 @@ import { ListasComponent } from './listas/listas.component';
 import { AngularFireAuthModule  } from '@angular/fire/compat/auth';
 import { FirestoreModule } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire/compat';
+import { ConfiguracionComponent } from './configuracion/configuracion.component';
 
 @NgModule({
-  declarations: [AppComponent, CamaraComponent, MandarDatosComponent, MenuComponent, ListasComponent],
+  declarations: [AppComponent, CamaraComponent, MandarDatosComponent, MenuComponent, ListasComponent, ConfiguracionComponent],
   imports: [
     BrowserModule,
     AngularFireAuthModule,
