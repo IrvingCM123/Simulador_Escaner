@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 interface Estructura {
   Matricula: string;
   Nombre: string;
-  Status: string;
+  Estado: string;
   Hora: string;
 }
 
@@ -24,12 +24,12 @@ export class DataService {
   addScannedData(matricula: string | any, nombre: string | any, status: string | any, hora: string | any) {
 
     const alreadyExists = this.scannedData.some((data) => {
-      return data.Matricula === matricula && data.Nombre === nombre && data.Status === status;
+      return data.Matricula === matricula && data.Nombre === nombre && data.Estado === status;
     });
 
     if (!alreadyExists) {
-      this.scannedData.push({ Matricula: matricula, Nombre: nombre, Status: status, Hora: hora });
-      this.lastScanned = { Matricula: matricula, Nombre: nombre, Status: status, Hora: hora };
+      this.scannedData.push({ Matricula: matricula, Nombre: nombre, Estado: status, Hora: hora });
+      this.lastScanned = { Matricula: matricula, Nombre: nombre, Estado: status, Hora: hora };
       this.MatriculaObservable.next(matricula);
       this.NombreObservable.next(nombre);
       this.StatusObservable.next(status);
