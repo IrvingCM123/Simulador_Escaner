@@ -12,10 +12,9 @@ interface Estructura {
 @Component({
   selector: 'app-listas',
   templateUrl: './listas.component.html',
-  styleUrls: ['./listas.component.css']
+  styleUrls: ['./listas.component.css'],
 })
 export class ListasComponent implements OnInit {
-
   datosLeidos: Estructura[] = [];
   listaAsistencia: any[] = [];
   nrcMateria = '';
@@ -28,14 +27,17 @@ export class ListasComponent implements OnInit {
   constructor(
     private dataService: DataService,
     private firestoreService: FirestoreService
-  ) { }
+  ) {}
 
   async ngOnInit() {
     this.datosLeidos = this.dataService.getScannedData();
 
     this.carrera = await this.firestoreService.getCarrera();
     this.nrcMateria = await this.firestoreService.getNrcByHorario();
-    this.listaAsistencia = await this.firestoreService.getFirestoreData(this.nrcMateria, this.carrera);
+    this.listaAsistencia = await this.firestoreService.getFirestoreData(
+      this.nrcMateria,
+      this.carrera
+    );
 
     this.dataService.MatriculaObservable.subscribe((matricula: string) => {
       this.lastMatriculaScanned = matricula;
@@ -52,19 +54,10 @@ export class ListasComponent implements OnInit {
 
   isPresent(matricula_Recibida: Estructura): boolean {
     const found = this.listaAsistencia.find(
-      (Lista_De_Asistencia) => Lista_De_Asistencia.Matricula === matricula_Recibida.Matricula
+      (Lista_De_Asistencia) =>
+        Lista_De_Asistencia.Matricula === matricula_Recibida.Matricula
     );
     return !!found;
-  }
-
-
-  getNrc() {
-    console.log('a', this.nrcMateria)
-    return this.firestoreService.getCarrera().then((_Data) => (this.carrera = _Data));
-  }
-
-  getCarrera() {
-    return this.firestoreService.getNrcByHorario().then((_Data) => (this.nrcMateria = _Data));
   }
 
   getMatricula() {
