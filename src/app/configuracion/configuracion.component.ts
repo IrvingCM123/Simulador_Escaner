@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { FirestoreService } from '../listas/firestore.service';
 
 @Component({
   selector: 'app-configuracion',
@@ -7,14 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConfiguracionComponent implements OnInit {
 
-  public Edificio = '';
-  public Salon = '';
+  edificioSeleccionado: string = '';
+  salonSeleccionado: string = '';
 
-  constructor() { }
+  constructor(@Inject(FirestoreService) private firestoreService: FirestoreService) { }
 
   ngOnInit(): void {
-    this.Edificio = 'Edificio 1';
-    this.Salon = 'Salón 6'
+  }
+
+  onSubmit() {
+    console.log('Edificio seleccionado:', this.edificioSeleccionado);
+    console.log('Salón seleccionado:', this.salonSeleccionado);
+    this.firestoreService.setConfiguracion(this.edificioSeleccionado, this.salonSeleccionado);
   }
 
 }

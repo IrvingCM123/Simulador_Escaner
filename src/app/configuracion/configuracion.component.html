@@ -1,1 +1,27 @@
-<p>configuracion works!</p>
+<form (ngSubmit)="onSubmit()">
+  <div class="mb-3">
+    <label class="form-label">Edificio asignado </label>
+    <select class="form-select" aria-label="Default select example" [(ngModel)]="edificioSeleccionado">
+      <option selected>Selecciona un edificio</option>
+      <option value="Edificio 1">Edificio 1</option>
+      <option value="Edificio 2">Edificio 2</option>
+      <option value="Edificio 3">Edificio 3</option>
+    </select>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Salón asignado </label>
+    <select class="form-select" aria-label="Default select example" [(ngModel)]="salonSeleccionado">
+      <option selected>Selecciona un salón</option>
+      <option value="Salón 1">Salón 1</option>
+      <option value="Salón 2">Salón 2</option>
+      <option value="Salón 3">Salón 3</option>
+      <option value="Salón 4">Salón 4</option>
+      <option value="Salón 5">Salón 5</option>
+      <option value="Salón 6">Salón 6</option>
+      <option value="Salón 7">Salón 7</option>
+      <option value="Salón 8">Salón 8</option>
+      <option value="Salón 9">Salón 9</option>
+    </select>
+  </div>
+  <button type="button" class="btn btn-primary" (click)="onSubmit()" routerLink="/Inicio" >Guardar configuración</button>
+</form>

@@ -12,11 +12,14 @@ export class FirestoreService {
   Hora: string | any;
 
   constructor(private firestore: AngularFirestore) {
-    this.Edificio = 'Edificio 1';
-    this.Salon = 'Salón 6';
     this.Dia = 'Lunes';
-    this.Hora = '11:00-13:00'
-   }
+    this.Hora = '11:00-13:00';
+  }
+
+  setConfiguracion(edificio: string, salon: string) {
+    this.Edificio = edificio;
+    this.Salon = salon;
+  }
 
   async getCarrera() {
     const carrera = await this.firestore.collection('/' + this.Edificio + '/' + this.Salon + '/Carrera').get().toPromise();
@@ -25,7 +28,7 @@ export class FirestoreService {
       const data_Carrera: string | any = data[0];
       return data_Carrera.Carrera;
     } else {
-      console.log("No se puede obtener la información de Firestore")
+      console.log("No se puede obtener la información de Firestore");
       return [];
     }
   }
@@ -43,9 +46,7 @@ export class FirestoreService {
     }
   }
 
-  async getFirestoreData(carrera: string, nrc: string) {
-    carrera='ISW'
-    nrc= '3968196038'
+  async getFirestoreData(nrc: string, carrera: string) {
     const lista = await this.firestore.collection('/' + carrera + '/Materias/' + nrc).get().toPromise();
     if (lista) {
       const data_Lista = lista.docs.map(doc => doc.data());
@@ -55,5 +56,4 @@ export class FirestoreService {
       return [];
     }
   }
-
 }

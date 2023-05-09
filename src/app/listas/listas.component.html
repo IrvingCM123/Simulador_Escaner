@@ -9,7 +9,7 @@
     </tr>
   </thead>
   <tbody>
-    <ng-container *ngFor="let dato of _Datos_Leidos; let i = index">
+    <ng-container *ngFor="let dato of datosLeidos; let i = index">
         <tr *ngIf="isPresent(dato)">
           <th scope="row">{{ i + 1 }}</th>
           <td>{{ dato.Matricula }}</td>
@@ -20,12 +20,6 @@
     </ng-container>
   </tbody>
 </table>
-
-<div *ngFor="let item of _Lista_Asistencia" >
-  <p> matr {{item.Matricula}} </p>
-  <p> matr {{item.Nombre}} </p>
-</div>
-
 
 <div>
   <h2>Último dato escaneado:</h2>
