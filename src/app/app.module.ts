@@ -21,6 +21,7 @@ import { AngularFireAuthModule  } from '@angular/fire/compat/auth';
 import { FirestoreModule } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire/compat';
 import { ConfiguracionComponent } from './configuracion/configuracion.component';
+import { FirestoreService } from './listas/firestore.service';
 
 @NgModule({
   declarations: [AppComponent, CamaraComponent, MandarDatosComponent, MenuComponent, ListasComponent, ConfiguracionComponent],
@@ -39,7 +40,8 @@ import { ConfiguracionComponent } from './configuracion/configuracion.component'
     AngularFirestoreModule,
     CommonModule
   ],
-  providers: [],
+  providers: [FirestoreService,
+    ConfiguracionComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
