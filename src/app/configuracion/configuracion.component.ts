@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { FirestoreService } from '../listas/firestore.service';
+import { FirestoreService } from '../Servicios/firestore.service';
 
 @Component({
   selector: 'app-configuracion',
