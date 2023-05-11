@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-
 interface Estructura {
   Matricula: string;
   Nombre: string;
@@ -20,16 +19,33 @@ export class DataService {
   public NombreObservable = new BehaviorSubject<string>('');
   public StatusObservable = new BehaviorSubject<string>('');
 
-
-  addScannedData(matricula: string | any, nombre: string | any, status: string | any, hora: string | any) {
-
+  addScannedData(
+    matricula: string | any,
+    nombre: string | any,
+    status: string | any,
+    hora: string | any
+  ) {
     const alreadyExists = this.scannedData.some((data) => {
-      return data.Matricula === matricula && data.Nombre === nombre && data.Estado === status;
+      return (
+        data.Matricula === matricula &&
+        data.Nombre === nombre &&
+        data.Estado === status
+      );
     });
 
     if (!alreadyExists) {
-      this.scannedData.push({ Matricula: matricula, Nombre: nombre, Estado: status, Hora: hora });
-      this.lastScanned = { Matricula: matricula, Nombre: nombre, Estado: status, Hora: hora };
+      this.scannedData.push({
+        Matricula: matricula,
+        Nombre: nombre,
+        Estado: status,
+        Hora: hora,
+      });
+      this.lastScanned = {
+        Matricula: matricula,
+        Nombre: nombre,
+        Estado: status,
+        Hora: hora,
+      };
       this.MatriculaObservable.next(matricula);
       this.NombreObservable.next(nombre);
       this.StatusObservable.next(status);
@@ -39,5 +55,4 @@ export class DataService {
   getScannedData() {
     return this.scannedData;
   }
-
 }
