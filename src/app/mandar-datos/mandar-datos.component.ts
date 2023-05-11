@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
-import { DataService } from '../Servicios/mandar.service';
+import { DataService } from '../Servicios/EscanearQR.service';
 
 @Component({
   selector: 'app-mandar-datos',

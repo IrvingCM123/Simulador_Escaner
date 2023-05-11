@@ -1,6 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { DataService } from '../Servicios/mandar.service';
-import { ListasComponent } from '../listas/listas.component';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { DataService } from '../Servicios/EscanearQR.service';
 @Component({
   selector: 'app-camara',
   templateUrl: './camara.component.html',
@@ -9,16 +8,16 @@ import { ListasComponent } from '../listas/listas.component';
 export class CamaraComponent implements OnInit {
   public cameras: MediaDeviceInfo[] = [];
   public myDevice!: MediaDeviceInfo;
+
   public scannerEnabled = false;
   public showScanSuccessMessage = false;
-  public lastMatricula: string = " ";
-  public lastNombre: string = "";
-  public lastStatus: string = "";
 
+  public lastMatricula: string = ' ';
+  public lastNombre: string = '';
+  public lastStatus: string = '';
   private hora: any = '';
 
-  constructor(private dataService: DataService) {
-  }
+  constructor(private dataService: DataService) {}
 
   ngOnInit() {
     navigator.mediaDevices
@@ -30,7 +29,6 @@ export class CamaraComponent implements OnInit {
         this.myDevice = this.cameras[0];
         this.scannerEnabled = true;
       });
-
   }
 
   camerasFoundHandler(cameras: MediaDeviceInfo[]) {
@@ -40,31 +38,23 @@ export class CamaraComponent implements OnInit {
 
   scanSuccessHandler(Datos: string) {
     let obtener_Datos = Datos.split(',');
-    let matricula = obtener_Datos[0];
-    let nombre = obtener_Datos[1];
-    let status = obtener_Datos[2];
-    this.lastMatricula = matricula;
-    this.lastNombre = nombre;
-    this.lastStatus = status;
+    let fecha = new Date();
 
-    const fecha = new Date();
+    this.lastMatricula = obtener_Datos[0];
+    this.lastNombre = obtener_Datos[1];
+    this.lastStatus = obtener_Datos[2];
     this.hora = fecha.getHours() + ':' + fecha.getMinutes();
 
-    this.dataService.addScannedData(
-      matricula,
-      nombre,
-      status,
+    this.dataService.almacenarDatosQR(
+      this.lastMatricula,
+      this.lastNombre,
+      this.lastStatus,
       this.hora
     );
 
     this.showScanSuccessMessage = true;
     setTimeout(() => {
       this.showScanSuccessMessage = false;
-    }, 2000);
-    const scannerEl: any = document.querySelector('.qr-scanner');
-    scannerEl.classList.add('scan');
-    setTimeout(() => {
-      scannerEl.classList.remove('scan');
     }, 2000);
   }
 

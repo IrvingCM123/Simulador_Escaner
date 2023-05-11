@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { DataService } from '../Servicios/mandar.service';
-import { FirestoreService } from '../Servicios/firestore.service';
+import { Component, Inject, OnInit } from '@angular/core';
+import { DataService } from '../Servicios/EscanearQR.service';
+import { FirestoreService } from '../Servicios/FirestoreListas.service';
+import { LocalStorageService } from '../Servicios/DatosLocales.service';
 
 interface Estructura {
   Matricula: string;
@@ -16,21 +17,26 @@ interface Estructura {
 })
 export class ListasComponent implements OnInit {
   datosLeidos: Estructura[] = [];
+  mostrarLista: Estructura[] = [];
   listaAsistencia: any[] = [];
   nrcMateria = '';
   carrera = '';
+  datosCargados = false;
 
-  lastMatriculaScanned: string | any = '';
-  lastNombreScanned: string | any = '';
-  lastStatusScanned: string | any = '';
+  //lastMatriculaScanned: string | any = '';
+  //lastNombreScanned: string | any = '';
+  //lastStatusScanned: string | any = '';
 
   constructor(
     private dataService: DataService,
-    private firestoreService: FirestoreService
+    private firestoreService: FirestoreService,
+    @Inject(LocalStorageService)
+    private localStorageService: LocalStorageService
   ) {}
 
   async ngOnInit() {
-    this.datosLeidos = this.dataService.getScannedData();
+    const Obtener = this.localStorageService.obtener_DatoLocal('almacenarDatosQR');
+    this.datosLeidos = Obtener ? JSON.parse(Obtener) : [];
 
     this.carrera = await this.firestoreService.getCarrera();
     this.nrcMateria = await this.firestoreService.getNrcByHorario();
@@ -39,7 +45,9 @@ export class ListasComponent implements OnInit {
       this.carrera
     );
 
-    this.dataService.MatriculaObservable.subscribe((matricula: string) => {
+    this.datosCargados = true;
+
+    /*this.dataService.MatriculaObservable.subscribe((matricula: string) => {
       this.lastMatriculaScanned = matricula;
     });
 
@@ -49,7 +57,7 @@ export class ListasComponent implements OnInit {
 
     this.dataService.StatusObservable.subscribe((status: string) => {
       this.lastStatusScanned = status;
-    });
+    });*/
   }
 
   isPresent(matricula_Recibida: Estructura): boolean {
@@ -60,7 +68,7 @@ export class ListasComponent implements OnInit {
     return !!found;
   }
 
-  public getMatricula() {
+  /*public getMatricula() {
     return this.lastMatriculaScanned;
   }
 
@@ -70,5 +78,5 @@ export class ListasComponent implements OnInit {
 
   public getStatus() {
     return this.lastStatusScanned;
-  }
+  }*/
 }
