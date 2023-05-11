@@ -8,7 +8,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
-
 import { AppComponent } from './app.component';
 import { CamaraComponent } from './camara/camara.component';
 import { MandarDatosComponent } from './mandar-datos/mandar-datos.component';
@@ -17,14 +16,21 @@ import { AppRoutingModule } from './app-routing.module';
 import { MenuComponent } from './menu';
 import { ListasComponent } from './listas/listas.component';
 
-import { AngularFireAuthModule  } from '@angular/fire/compat/auth';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { FirestoreModule } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire/compat';
 import { ConfiguracionComponent } from './configuracion/configuracion.component';
-import { FirestoreService } from './listas/firestore.service';
+import { FirestoreService } from './Servicios/firestore.service';
 
 @NgModule({
-  declarations: [AppComponent, CamaraComponent, MandarDatosComponent, MenuComponent, ListasComponent, ConfiguracionComponent],
+  declarations: [
+    AppComponent,
+    CamaraComponent,
+    MandarDatosComponent,
+    MenuComponent,
+    ListasComponent,
+    ConfiguracionComponent,
+  ],
   imports: [
     BrowserModule,
     AngularFireAuthModule,
@@ -38,10 +44,9 @@ import { FirestoreService } from './listas/firestore.service';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireModule.initializeApp(environment.firebaseListas),
     AngularFirestoreModule,
-    CommonModule
+    CommonModule,
   ],
-  providers: [FirestoreService,
-    ConfiguracionComponent],
+  providers: [FirestoreService, ConfiguracionComponent, ListasComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

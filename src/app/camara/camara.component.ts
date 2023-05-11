@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { DataService } from './mandar.service';
+import { DataService } from '../Servicios/mandar.service';
+import { ListasComponent } from '../listas/listas.component';
 @Component({
   selector: 'app-camara',
   templateUrl: './camara.component.html',
@@ -10,11 +11,13 @@ export class CamaraComponent implements OnInit {
   public myDevice!: MediaDeviceInfo;
   public scannerEnabled = false;
   public showScanSuccessMessage = false;
+  public lastMatricula: string = " ";
+  public lastNombre: string = "";
+  public lastStatus: string = "";
 
   private hora: any = '';
 
   constructor(private dataService: DataService) {
-
   }
 
   ngOnInit() {
@@ -27,6 +30,7 @@ export class CamaraComponent implements OnInit {
         this.myDevice = this.cameras[0];
         this.scannerEnabled = true;
       });
+
   }
 
   camerasFoundHandler(cameras: MediaDeviceInfo[]) {
@@ -39,6 +43,9 @@ export class CamaraComponent implements OnInit {
     let matricula = obtener_Datos[0];
     let nombre = obtener_Datos[1];
     let status = obtener_Datos[2];
+    this.lastMatricula = matricula;
+    this.lastNombre = nombre;
+    this.lastStatus = status;
 
     const fecha = new Date();
     this.hora = fecha.getHours() + ':' + fecha.getMinutes();
