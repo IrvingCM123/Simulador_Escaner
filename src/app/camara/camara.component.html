@@ -1,4 +1,4 @@
-<zxing-scanner class="qr-scanner" style="width: 500px;"
+<zxing-scanner class="qr-scanner" style="width: 400px;"
   [enable]="scannerEnabled"
   [device]="myDevice"
   (camerasFound)="camerasFoundHandler($event)"
@@ -7,4 +7,11 @@
 
 <div *ngIf="showScanSuccessMessage" class="scan-success-message">
   El código ha sido escaneado correctamente
+</div>
+
+<div>
+  <h2>Último dato escaneado:</h2>
+  <p>Matrícula: {{ lastMatricula || "No hay datos" }}</p>
+  <p>Nombre: {{ lastNombre || "No hay datos" }}</p>
+  <p>Status: {{ lastStatus || "No hay datos" }}</p>
 </div>

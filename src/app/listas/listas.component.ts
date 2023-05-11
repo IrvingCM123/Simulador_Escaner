@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../camara/mandar.service';
-import { FirestoreService } from './firestore.service';
+import { DataService } from '../Servicios/mandar.service';
+import { FirestoreService } from '../Servicios/firestore.service';
 
 interface Estructura {
   Matricula: string;
@@ -60,15 +60,15 @@ export class ListasComponent implements OnInit {
     return !!found;
   }
 
-  getMatricula() {
+  public getMatricula() {
     return this.lastMatriculaScanned;
   }
 
-  getNombre() {
+  public getNombre() {
     return this.lastNombreScanned;
   }
 
-  getStatus() {
+  public getStatus() {
     return this.lastStatusScanned;
   }
 }
