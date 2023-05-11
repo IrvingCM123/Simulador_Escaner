@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LocalStorageService {
+
+  private almacenarDatosQRObservable = new Subject<any>();
 
   constructor() { }
 
@@ -13,6 +16,7 @@ export class LocalStorageService {
 
   guardar_DatoLocal(indice: string, valor: any): void {
     localStorage.setItem(indice, valor);
+    this.almacenarDatosQRObservable.next(valor);
   }
 
   eliminar_DatoLocal(indice: string): void {
@@ -26,4 +30,7 @@ export class LocalStorageService {
     console.log(arreglo_Local)
   }
 
+  obtenerAlmacenarDatosQRObservable(): Observable<any> {
+    return this.almacenarDatosQRObservable.asObservable();
+  }
 }

@@ -35,6 +35,12 @@ export class ListasComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
+    this.localStorageService
+      .obtenerAlmacenarDatosQRObservable()
+      .subscribe((nuevoValor: any) => {
+        this.datosLeidos = JSON.parse(nuevoValor) || [];
+      });
+
     const Obtener = this.localStorageService.obtener_DatoLocal('almacenarDatosQR');
     this.datosLeidos = Obtener ? JSON.parse(Obtener) : [];
 
