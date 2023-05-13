@@ -1,22 +1,28 @@
-<table class="table  bg-light">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Matricula</th>
-      <th>Nombre</th>
-      <th>Estado</th>
-      <th>Hora</th>
-    </tr>
-  </thead>
-  <tbody>
-    <ng-container *ngFor="let dato of datosLeidos; let i = index">
-        <tr *ngIf="isPresent(dato)">
-          <th scope="row">{{ i + 1 }}</th>
-          <td>{{ dato.Matricula }}</td>
-          <td>{{ dato.Nombre }}</td>
-          <td> {{dato.Estado}} </td>
-          <td> {{dato.Hora}} </td>
+
+<div class="table-container">
+  <ng-container *ngIf="datosCargados">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Matricula</th>
+          <th>Nombre</th>
+          <th>Estado</th>
+          <th>Hora</th>
         </tr>
-    </ng-container>
-  </tbody>
-</table>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let dato of datosLeidos; let i = index">
+          <tr *ngIf="isPresent(dato)">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ dato.Matricula }}</td>
+            <td>{{ dato.Nombre }}</td>
+            <td>{{ dato.Estado }}</td>
+            <td>{{ dato.Hora }}</td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </ng-container>
+</div>
+

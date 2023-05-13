@@ -1,24 +1,36 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { DataService } from '../Servicios/mandar.service';
-import { ListasComponent } from '../listas/listas.component';
+import {
+  Component,
+  Inject,
+  OnInit,
+  ViewChild,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
+import { DataService } from '../Servicios/EscanearQR.service';
+import { LocalStorageService } from '../Servicios/DatosLocales.service';
+
 @Component({
   selector: 'app-camara',
   templateUrl: './camara.component.html',
   styleUrls: ['./camara.component.css'],
 })
-export class CamaraComponent implements OnInit {
+export class CamaraComponent implements OnInit, OnChanges {
   public cameras: MediaDeviceInfo[] = [];
   public myDevice!: MediaDeviceInfo;
+
   public scannerEnabled = false;
   public showScanSuccessMessage = false;
-  public lastMatricula: string = " ";
-  public lastNombre: string = "";
-  public lastStatus: string = "";
+  public estado_Camara = true;
 
+  public lastMatricula: string = ' ';
+  public lastNombre: string = '';
+  public lastStatus: string = '';
   private hora: any = '';
 
-  constructor(private dataService: DataService) {
-  }
+  constructor(
+    private dataService: DataService,
+    private localStorageService: LocalStorageService
+  ) {}
 
   ngOnInit() {
     navigator.mediaDevices
@@ -31,6 +43,15 @@ export class CamaraComponent implements OnInit {
         this.scannerEnabled = true;
       });
 
+    this.localStorageService
+      .obtenerCamaraObservable()
+      .subscribe((valor: boolean) => {
+        this.estado_Camara = valor;
+        if (this.cameras.length > 0) {
+          this.myDevice = this.cameras[0];
+          this.scannerEnabled = valor;
+        }
+      });
   }
 
   camerasFoundHandler(cameras: MediaDeviceInfo[]) {
@@ -40,31 +61,23 @@ export class CamaraComponent implements OnInit {
 
   scanSuccessHandler(Datos: string) {
     let obtener_Datos = Datos.split(',');
-    let matricula = obtener_Datos[0];
-    let nombre = obtener_Datos[1];
-    let status = obtener_Datos[2];
-    this.lastMatricula = matricula;
-    this.lastNombre = nombre;
-    this.lastStatus = status;
+    let fecha = new Date();
 
-    const fecha = new Date();
+    this.lastMatricula = obtener_Datos[0];
+    this.lastNombre = obtener_Datos[1];
+    this.lastStatus = obtener_Datos[2];
     this.hora = fecha.getHours() + ':' + fecha.getMinutes();
 
-    this.dataService.addScannedData(
-      matricula,
-      nombre,
-      status,
+    this.dataService.almacenarDatosQR(
+      this.lastMatricula,
+      this.lastNombre,
+      this.lastStatus,
       this.hora
     );
 
     this.showScanSuccessMessage = true;
     setTimeout(() => {
       this.showScanSuccessMessage = false;
-    }, 2000);
-    const scannerEl: any = document.querySelector('.qr-scanner');
-    scannerEl.classList.add('scan');
-    setTimeout(() => {
-      scannerEl.classList.remove('scan');
     }, 2000);
   }
 
@@ -76,5 +89,12 @@ export class CamaraComponent implements OnInit {
         this.scannerEnabled = true;
       }
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['estado_Camara'] && this.cameras.length > 0) {
+      this.myDevice = this.cameras[0];
+      this.scannerEnabled = changes['estado_Camara'].currentValue;
+    }
   }
 }
