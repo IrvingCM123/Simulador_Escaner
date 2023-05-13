@@ -6,7 +6,7 @@ import { LocalStorageService } from './DatosLocales.service';
   providedIn: 'root',
 })
 export class FirestoreService {
-  
+
   Edificio: string | any;
   Salon: string | any;
   Dia: string | any;
@@ -82,5 +82,9 @@ export class FirestoreService {
       console.log('No se pudo obtener la información de Firestore.');
       return [];
     }
+  }
+
+  async mandarDatosLista(indice: any | string, datos: any | []) {
+    const mandar = await this.firestore.doc(datos).set(datos, indice);
   }
 }

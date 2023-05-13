@@ -1,23 +1,36 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  Inject,
+  OnInit,
+  ViewChild,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { DataService } from '../Servicios/EscanearQR.service';
+import { LocalStorageService } from '../Servicios/DatosLocales.service';
+
 @Component({
   selector: 'app-camara',
   templateUrl: './camara.component.html',
   styleUrls: ['./camara.component.css'],
 })
-export class CamaraComponent implements OnInit {
+export class CamaraComponent implements OnInit, OnChanges {
   public cameras: MediaDeviceInfo[] = [];
   public myDevice!: MediaDeviceInfo;
 
   public scannerEnabled = false;
   public showScanSuccessMessage = false;
+  public estado_Camara = true;
 
   public lastMatricula: string = ' ';
   public lastNombre: string = '';
   public lastStatus: string = '';
   private hora: any = '';
 
-  constructor(private dataService: DataService) {}
+  constructor(
+    private dataService: DataService,
+    private localStorageService: LocalStorageService
+  ) {}
 
   ngOnInit() {
     navigator.mediaDevices
@@ -28,6 +41,16 @@ export class CamaraComponent implements OnInit {
         );
         this.myDevice = this.cameras[0];
         this.scannerEnabled = true;
+      });
+
+    this.localStorageService
+      .obtenerCamaraObservable()
+      .subscribe((valor: boolean) => {
+        this.estado_Camara = valor;
+        if (this.cameras.length > 0) {
+          this.myDevice = this.cameras[0];
+          this.scannerEnabled = valor;
+        }
       });
   }
 
@@ -66,5 +89,12 @@ export class CamaraComponent implements OnInit {
         this.scannerEnabled = true;
       }
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['estado_Camara'] && this.cameras.length > 0) {
+      this.myDevice = this.cameras[0];
+      this.scannerEnabled = changes['estado_Camara'].currentValue;
+    }
   }
 }

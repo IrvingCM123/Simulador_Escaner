@@ -22,9 +22,7 @@ export class DataService {
   private obtener: any = '';
   private obtener_Datos: Estructura[] | any = [];
   private datos_Almacenados: any;
-  private datos_Lista: Estructura[] | any[] = this.obtener
-    ? JSON.parse(this.obtener)
-    : [];
+  private datos_Lista: Estructura[] | any[] = this.obtener ? JSON.parse(this.obtener) : [];
   //public MatriculaObservable = new BehaviorSubject<string>('');
   //public NombreObservable = new BehaviorSubject<string>('');
   //public StatusObservable = new BehaviorSubject<string>('');

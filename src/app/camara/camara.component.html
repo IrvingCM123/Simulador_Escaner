@@ -1,4 +1,4 @@
-<zxing-scanner style="width: 400px;"
+<zxing-scanner *ngIf="estado_Camara" style="width: 400px;"
   [enable]="scannerEnabled"
   [device]="myDevice"
   (camerasFound)="camerasFoundHandler($event)"
