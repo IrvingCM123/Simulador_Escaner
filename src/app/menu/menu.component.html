@@ -1,8 +1,7 @@
 <main class="Navegador">
-
   <section class="Logo_Pagina">
     <div class="Logo_Pagina_img">
-      <img src="../../assets/menu/Escudo_Pagina.png" alt="">
+      <img src="../../assets/menu/Escudo_Pagina.png" alt="" />
     </div>
   </section>
 
@@ -17,15 +16,16 @@
       <nav class="Rutas_Navegacion_Listado">
         <a href="Inicio">Inicio</a>
         <a href="Configuracion">Configuracion</a>
-        <a href="Sistema/Inicio/Alta_Materia">Alta Materia </a>
-        <a href="Sistema/Inicio/Baja_Materia">Baja Materia </a>
       </nav>
     </div>
   </section>
 
   <section class="Cuenta">
     <div class="Cerrar_Sesion">
-      <button> <p>Apagar</p> </button>
+      <button (click)="onSubmit()">
+        <div *ngIf="valor_Camara == true">Encendido</div>
+        <div *ngIf="valor_Camara == false">Apagado</div>
+      </button>
     </div>
   </section>
 </main>

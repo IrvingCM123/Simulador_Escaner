@@ -1,0 +1,8 @@
+.table-container {
+  height: 300px; /* Establece una altura fija para el contenedor */
+  overflow: auto; /* Establece un estilo de desbordamiento de desplazamiento */
+}
+
+table {
+  max-height: 100%; /* Establece una altura máxima para la tabla */
+}
