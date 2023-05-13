@@ -20,7 +20,7 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { FirestoreModule } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire/compat';
 import { ConfiguracionComponent } from './configuracion/configuracion.component';
-import { FirestoreService } from './Servicios/firestore.service';
+import { FirestoreService } from './Servicios/FirestoreListas.service';
 
 @NgModule({
   declarations: [
