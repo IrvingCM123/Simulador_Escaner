@@ -12,13 +12,13 @@
         </tr>
       </thead>
       <tbody>
-        <ng-container *ngFor="let dato of datosLeidos; let i = index">
-          <tr *ngIf="isPresent(dato)">
+        <ng-container *ngFor="let alumno_recibido of datosLeidos; let i = index">
+          <tr *ngIf="aparece_en_Lista(alumno_recibido)">
             <th scope="row">{{ i + 1 }}</th>
-            <td>{{ dato.Matricula }}</td>
-            <td>{{ dato.Nombre }}</td>
-            <td>{{ dato.Estado }}</td>
-            <td>{{ dato.Hora }}</td>
+            <td>{{ alumno_recibido.Matricula }}</td>
+            <td>{{ alumno_recibido.Nombre }}</td>
+            <td>{{ alumno_recibido.Estado }}</td>
+            <td>{{ alumno_recibido.Hora }}</td>
           </tr>
         </ng-container>
       </tbody>

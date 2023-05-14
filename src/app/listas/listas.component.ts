@@ -19,25 +19,18 @@ export class ListasComponent implements OnInit {
   datosLeidos: Estructura[] = [];
   mostrarLista: Estructura[] = [];
   listaAsistencia: any[] = [];
-  nrcMateria = '';
-  carrera = '';
-  datosCargados = false;
-
-  //lastMatriculaScanned: string | any = '';
-  //lastNombreScanned: string | any = '';
-  //lastStatusScanned: string | any = '';
+  nrcMateria: string = '';
+  carrera: string = '';
+  datosCargados: boolean = false;
 
   constructor(
-    private dataService: DataService,
     private firestoreService: FirestoreService,
-    @Inject(LocalStorageService)
-    private localStorageService: LocalStorageService
+    @Inject(LocalStorageService) private localStorageService: LocalStorageService
   ) {}
 
   async ngOnInit() {
-    this.localStorageService
-      .obtenerAlmacenarDatosQRObservable()
-      .subscribe((nuevoValor: any) => {
+
+    this.localStorageService.obtenerAlmacenarDatosQRObservable().subscribe((nuevoValor: any) => {
         this.datosLeidos = JSON.parse(nuevoValor) || [];
       });
 
@@ -46,43 +39,17 @@ export class ListasComponent implements OnInit {
 
     this.carrera = await this.firestoreService.getCarrera();
     this.nrcMateria = await this.firestoreService.getNrcByHorario();
-    this.listaAsistencia = await this.firestoreService.getFirestoreData(
-      this.nrcMateria,
-      this.carrera
-    );
+    this.listaAsistencia = await this.firestoreService.getFirestoreData(this.nrcMateria, this.carrera);
 
     this.datosCargados = true;
 
-    /*this.dataService.MatriculaObservable.subscribe((matricula: string) => {
-      this.lastMatriculaScanned = matricula;
-    });
-
-    this.dataService.NombreObservable.subscribe((nombre: string) => {
-      this.lastNombreScanned = nombre;
-    });
-
-    this.dataService.StatusObservable.subscribe((status: string) => {
-      this.lastStatusScanned = status;
-    });*/
   }
 
-  isPresent(matricula_Recibida: Estructura): boolean {
-    const found = this.listaAsistencia.find(
-      (Lista_De_Asistencia) =>
-        Lista_De_Asistencia.Matricula === matricula_Recibida.Matricula
+  aparece_en_Lista(alumno_recibido: Estructura): boolean {
+    const buscar = this.listaAsistencia.find( (buscar_coincidencia) =>
+      buscar_coincidencia.Matricula === alumno_recibido.Matricula
     );
-    return !!found;
+    return !!buscar;
   }
 
-  /*public getMatricula() {
-    return this.lastMatriculaScanned;
-  }
-
-  public getNombre() {
-    return this.lastNombreScanned;
-  }
-
-  public getStatus() {
-    return this.lastStatusScanned;
-  }*/
 }
