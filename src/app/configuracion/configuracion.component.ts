@@ -2,6 +2,12 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { FirestoreService } from '../Servicios/FirestoreListas.service';
 import { Datos_Locales } from '../Servicios/DatosLocales.service';
 
+interface Estructura {
+  Matricula: string;
+  Nombre: string;
+  Estado: string;
+  Hora: string;
+}
 @Component({
   selector: 'app-configuracion',
   templateUrl: './configuracion.component.html',
@@ -10,10 +16,20 @@ import { Datos_Locales } from '../Servicios/DatosLocales.service';
 export class ConfiguracionComponent implements OnInit {
   edificioSeleccionado: string = 'Selecciona un edificio';
   salonSeleccionado: string = 'Selecciona un salón';
+  Lista_Asistencia: boolean = false;
+  Materias_Cargadas: boolean = false;
 
-  constructor( @Inject(Datos_Locales) private datos_locales: Datos_Locales ) {}
+  datosLeidos: Estructura[] = [];
+  nrcMateria: string = '';
+  carrera: string = '';
 
-  ngOnInit(): void {
+  Lista_Materias: any[] = [];
+  listaAsistencia: any[] = [];
+
+  constructor( @Inject(Datos_Locales) private datos_locales: Datos_Locales,
+  private firestoreService: FirestoreService ) {}
+
+  async ngOnInit() {
     const edificio = this.datos_locales.obtener_DatoLocal('edificioSeleccionado');
     const salon = this.datos_locales.obtener_DatoLocal('salonSeleccionado');
 
@@ -21,6 +37,14 @@ export class ConfiguracionComponent implements OnInit {
       this.edificioSeleccionado = edificio;
       this.salonSeleccionado = salon;
     }
+
+    const Obtener = this.datos_locales.obtener_DatoLocal('almacenarDatosQR');
+    this.datosLeidos = Obtener ? JSON.parse(Obtener) : [];
+
+    this.carrera = await this.firestoreService.getCarrera();
+    this.nrcMateria = await this.firestoreService.getNrcByHorario();
+    this.listaAsistencia = await this.firestoreService.getListaAsistencia(this.nrcMateria, this.carrera);
+    this.Lista_Materias = await this.firestoreService.getMaterias();
   }
 
   onSubmit() {

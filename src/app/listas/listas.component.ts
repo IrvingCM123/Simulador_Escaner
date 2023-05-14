@@ -30,7 +30,7 @@ export class ListasComponent implements OnInit {
 
   async ngOnInit() {
 
-    this.datos_locales.obtenerAlmacenarDatosQRObservable().subscribe((nuevoValor: any) => {
+    this.datos_locales.Lista_Datos_QR_Observable().subscribe((nuevoValor: any) => {
         this.datosLeidos = JSON.parse(nuevoValor) || [];
       });
 

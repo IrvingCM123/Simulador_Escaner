@@ -19,18 +19,10 @@ export class MenuComponent implements OnInit {
   onSubmit() {
     if (this.valor_Camara == false) {
       this.valor_Camara = true;
-      this.datos_locales.actualizar_DatoLocal(
-        'Camara',
-        this.valor_Camara
-      );
-      this.datos_locales.obtenerCamaraObservable().next(true); // Cambiar el valor de camaraSubject a true
+      this.datos_locales.Habilitar_Desabilitar_Camara_Observable().next(true);
     } else {
       this.valor_Camara = false;
-      this.datos_locales.actualizar_DatoLocal(
-        'Camara',
-        this.valor_Camara
-      );
-      this.datos_locales.obtenerCamaraObservable().next(false); // Cambiar el valor de camaraSubject a false
+      this.datos_locales.Habilitar_Desabilitar_Camara_Observable().next(false); 
     }
   }
 }

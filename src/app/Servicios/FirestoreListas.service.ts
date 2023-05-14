@@ -60,11 +60,29 @@ export class FirestoreService {
 
     if (lista_encontrada) {
       const datos_lista = lista_encontrada.docs.map((alumnos) => alumnos.data());
+      console.log(datos_lista)
       return datos_lista;
     } else {
       console.log('No se pudo obtener la información de Firestore.');
       return [];
     }
+  }
+
+  async getMaterias() {
+
+    let url = '/' + this.Edificio + '/' + this.Salon + '/' + this.Dia + '/' ;
+    const materias_obtenidas = await this.firestore.collection(url).get().toPromise();
+
+    if (materias_obtenidas) {
+      const datos_recibidos = materias_obtenidas.docs.map((datos) => datos.data());
+      const materias: string | any = datos_recibidos;
+      console.log(materias)
+      return materias;
+    } else {
+      console.log('No se pudo obtener la información de Firestore.');
+      return [];
+    }
+
   }
 
 }

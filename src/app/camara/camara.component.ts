@@ -41,7 +41,7 @@ export class CamaraComponent implements OnInit, OnChanges {
         this.Escanear_Codigos_Off_ON = true;
       });
 
-    this.datos_locales.obtenerCamaraObservable().subscribe((habilitado: boolean) => {
+    this.datos_locales.Habilitar_Desabilitar_Camara_Observable().subscribe((habilitado: boolean) => {
         this.Habilitar_Camara_Off_ON = habilitado;
         if (this.Camaras_Encontradas.length > 0) {
           this.Dispotivo_Usar = this.Camaras_Encontradas[0];
