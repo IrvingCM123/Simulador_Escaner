@@ -1,17 +1,17 @@
-<zxing-scanner *ngIf="estado_Camara" style="width: 400px;"
-  [enable]="scannerEnabled"
-  [device]="myDevice"
-  (camerasFound)="camerasFoundHandler($event)"
-  (scanSuccess)="scanSuccessHandler($event)"
+<zxing-scanner *ngIf="Habilitar_Camara_Off_ON" style="width: 400px;"
+  [enable]="Escanear_Codigos_Off_ON"
+  [device]="Dispotivo_Usar"
+  (camerasFound)="Controlador_Camaras_Encontradas($event)"
+  (scanSuccess)="Controlador_Escaneado($event)"
 ></zxing-scanner>
 
-<div *ngIf="showScanSuccessMessage" class="scan-success-message">
+<div *ngIf="Mostrar_Mensaje_Escaneo" class="scan-success-message">
   El código ha sido escaneado correctamente
 </div>
 
 <div>
   <h2>Último dato escaneado:</h2>
-  <p>Matrícula: {{ lastMatricula || "No hay datos" }}</p>
-  <p>Nombre: {{ lastNombre || "No hay datos" }}</p>
-  <p>Status: {{ lastStatus || "No hay datos" }}</p>
+  <p>Matrícula: {{ Ultima_Matricula_Escaneada || "No hay datos" }}</p>
+  <p>Nombre: {{ Ultimo_Nombre_Escaneado || "No hay datos" }}</p>
+  <p>Status: {{ Ultimo_Estado_Escaneado || "No hay datos" }}</p>
 </div>
