@@ -4,16 +4,15 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class LocalStorageService {
+export class Datos_Locales {
+
   private almacenarDatosQRObservable = new Subject<any>();
-  private camaraSubject = new BehaviorSubject<boolean>(
+
+  private Habilitar_Desabilitar_Camara = new BehaviorSubject<boolean>(
     localStorage.getItem('Camara') === 'true'
   );
 
-  constructor() {}
-
   obtener_DatoLocal(indice: string): any {
-    console.log('a', indice);
     return localStorage.getItem(indice);
   }
 
@@ -35,14 +34,13 @@ export class LocalStorageService {
     const arreglo_Local = JSON.parse(this.obtener_DatoLocal(indice)) || [];
     arreglo_Local.push(valor);
     this.guardar_DatoLocal(indice, JSON.stringify(arreglo_Local));
-    console.log(arreglo_Local);
   }
 
-  obtenerAlmacenarDatosQRObservable(): Observable<any> {
+  Lista_Datos_QR_Observable(): Observable<any> {
     return this.almacenarDatosQRObservable.asObservable();
   }
 
-  obtenerCamaraObservable(): Subject<boolean> {
-    return this.camaraSubject;
+  Habilitar_Desabilitar_Camara_Observable(): Subject<boolean> {
+    return this.Habilitar_Desabilitar_Camara;
   }
 }
