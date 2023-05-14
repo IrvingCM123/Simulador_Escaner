@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class LocalStorageService {
+export class Datos_Locales {
   private almacenarDatosQRObservable = new Subject<any>();
   private camaraSubject = new BehaviorSubject<boolean>(
     localStorage.getItem('Camara') === 'true'

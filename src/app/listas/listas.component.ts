@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { DataService } from '../Servicios/EscanearQR.service';
+import { Escanear_Service } from '../Servicios/EscanearQR.service';
 import { FirestoreService } from '../Servicios/FirestoreListas.service';
-import { LocalStorageService } from '../Servicios/DatosLocales.service';
+import { Datos_Locales } from '../Servicios/DatosLocales.service';
 
 interface Estructura {
   Matricula: string;
@@ -25,16 +25,16 @@ export class ListasComponent implements OnInit {
 
   constructor(
     private firestoreService: FirestoreService,
-    @Inject(LocalStorageService) private localStorageService: LocalStorageService
+    @Inject(Datos_Locales) private datos_locales: Datos_Locales
   ) {}
 
   async ngOnInit() {
 
-    this.localStorageService.obtenerAlmacenarDatosQRObservable().subscribe((nuevoValor: any) => {
+    this.datos_locales.obtenerAlmacenarDatosQRObservable().subscribe((nuevoValor: any) => {
         this.datosLeidos = JSON.parse(nuevoValor) || [];
       });
 
-    const Obtener = this.localStorageService.obtener_DatoLocal('almacenarDatosQR');
+    const Obtener = this.datos_locales.obtener_DatoLocal('almacenarDatosQR');
     this.datosLeidos = Obtener ? JSON.parse(Obtener) : [];
 
     this.carrera = await this.firestoreService.getCarrera();

@@ -6,8 +6,8 @@ import {
   OnChanges,
   SimpleChanges,
 } from '@angular/core';
-import { DataService } from '../Servicios/EscanearQR.service';
-import { LocalStorageService } from '../Servicios/DatosLocales.service';
+import { Escanear_Service } from '../Servicios/EscanearQR.service';
+import { Datos_Locales } from '../Servicios/DatosLocales.service';
 
 @Component({
   selector: 'app-camara',
@@ -28,8 +28,8 @@ export class CamaraComponent implements OnInit, OnChanges {
   private Hora_Actual: any = '';
 
   constructor(
-    private dataService: DataService,
-    private localStorageService: LocalStorageService
+    private dataService: Escanear_Service,
+    private datos_locales: Datos_Locales
   ) {}
 
   ngOnInit() {
@@ -41,7 +41,7 @@ export class CamaraComponent implements OnInit, OnChanges {
         this.Escanear_Codigos_Off_ON = true;
       });
 
-    this.localStorageService.obtenerCamaraObservable().subscribe((habilitado: boolean) => {
+    this.datos_locales.obtenerCamaraObservable().subscribe((habilitado: boolean) => {
         this.Habilitar_Camara_Off_ON = habilitado;
         if (this.Camaras_Encontradas.length > 0) {
           this.Dispotivo_Usar = this.Camaras_Encontradas[0];

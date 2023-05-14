@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
-import { DataService } from '../Servicios/EscanearQR.service';
+import { Escanear_Service } from '../Servicios/EscanearQR.service';
 
 @Component({
   selector: 'app-mandar-datos',
@@ -16,7 +16,7 @@ export class MandarDatosComponent implements OnInit {
   DatosLocal: string[] = [];
   DatoLista: string[] = [];
 
-  constructor(private firestore: AngularFirestore, private dataService: DataService) {
+  constructor(private firestore: AngularFirestore, private dataService: Escanear_Service) {
 
     const fecha = new Date();
 

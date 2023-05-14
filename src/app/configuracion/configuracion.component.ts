@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FirestoreService } from '../Servicios/FirestoreListas.service';
-import { LocalStorageService } from '../Servicios/DatosLocales.service';
+import { Datos_Locales } from '../Servicios/DatosLocales.service';
 
 @Component({
   selector: 'app-configuracion',
@@ -12,16 +12,16 @@ export class ConfiguracionComponent implements OnInit {
   salonSeleccionado: string = 'Selecciona un salón';
 
   constructor(
-    @Inject(LocalStorageService)
-    private localStorageService: LocalStorageService
+    @Inject(Datos_Locales)
+    private datos_locales: Datos_Locales
   ) {}
 
   ngOnInit(): void {
-    const edificio = this.localStorageService.obtener_DatoLocal(
+    const edificio = this.datos_locales.obtener_DatoLocal(
       'edificioSeleccionado'
     );
     const salon =
-      this.localStorageService.obtener_DatoLocal('salonSeleccionado');
+      this.datos_locales.obtener_DatoLocal('salonSeleccionado');
 
     if (edificio && salon) {
       this.edificioSeleccionado = edificio;
@@ -30,11 +30,11 @@ export class ConfiguracionComponent implements OnInit {
   }
 
   onSubmit() {
-    this.localStorageService.guardar_DatoLocal(
+    this.datos_locales.guardar_DatoLocal(
       'edificioSeleccionado',
       this.edificioSeleccionado
     );
-    this.localStorageService.guardar_DatoLocal(
+    this.datos_locales.guardar_DatoLocal(
       'salonSeleccionado',
       this.salonSeleccionado
     );
