@@ -5,6 +5,10 @@
   (scanSuccess)="Controlador_Escaneado($event)"
 ></zxing-scanner>
 
+<div *ngIf="Habilitar_Camara_Off_ON == false">
+  Escaner Deshabilitado!
+</div>
+
 <div *ngIf="Mostrar_Mensaje_Escaneo" class="scan-success-message">
   El código ha sido escaneado correctamente
 </div>
