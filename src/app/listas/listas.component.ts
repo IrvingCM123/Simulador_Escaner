@@ -39,7 +39,7 @@ export class ListasComponent implements OnInit {
 
     this.carrera = await this.firestoreService.getCarrera();
     this.nrcMateria = await this.firestoreService.getNrcByHorario();
-    this.listaAsistencia = await this.firestoreService.getFirestoreData(this.nrcMateria, this.carrera);
+    this.listaAsistencia = await this.firestoreService.getListaAsistencia(this.nrcMateria, this.carrera);
 
     this.datosCargados = true;
 

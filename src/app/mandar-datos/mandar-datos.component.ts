@@ -16,16 +16,12 @@ export class MandarDatosComponent implements OnInit {
   DatosLocal: string[] = [];
   DatoLista: string[] = [];
 
-  constructor(private firestore: AngularFirestore, private dataService: Escanear_Service) {
+  constructor(private firestore: AngularFirestore) {
 
     const fecha = new Date();
 
     this.fecha_Actual = fecha.getFullYear() + '-' + ( fecha.getMonth() + 1 ) + '-' + fecha.getDate();
     this.Hora = fecha.getHours() + ':' + fecha.getMinutes();
-
-    //this.DatosLocal = this.dataService.getScannedData(); console.log(this.DatosLocal);
-    //this.DatoLista = this.dataService.getLastScannedData(); console.log(this.DatoLista);
-
     this.Datos = [ {Matricula: 'zS20006735', Nombre: 'Irving Rafael Conde Marín', Status: 'Presente', NRC: 98429, Docente: '3968196038'}, {Matricula: 'zS20006432', Nombre: 'Elizabeth Galindo Pedraza', Status: 'Presente', NRC: 98429, Docente: '3968196038'} ]
 
   }

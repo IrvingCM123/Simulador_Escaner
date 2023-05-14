@@ -23,9 +23,6 @@ export class Escanear_Service {
   private obtener_Datos: Estructura[] | any = [];
   private datos_Almacenados: any;
   private datos_Lista: Estructura[] | any[] = this.obtener ? JSON.parse(this.obtener) : [];
-  //public MatriculaObservable = new BehaviorSubject<string>('');
-  //public NombreObservable = new BehaviorSubject<string>('');
-  //public StatusObservable = new BehaviorSubject<string>('');
 
   almacenarDatosQR(
     matricula: string | any,
@@ -55,9 +52,6 @@ export class Escanear_Service {
       this.datos_Lista = JSON.parse(
         this.datos_locales.obtener_DatoLocal('almacenarDatosQR') || '[]'
       );
-      //this.MatriculaObservable.next(matricula);
-      //this.NombreObservable.next(nombre);
-      //this.StatusObservable.next(status);
     }
   }
 

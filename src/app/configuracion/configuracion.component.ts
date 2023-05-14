@@ -11,17 +11,11 @@ export class ConfiguracionComponent implements OnInit {
   edificioSeleccionado: string = 'Selecciona un edificio';
   salonSeleccionado: string = 'Selecciona un salón';
 
-  constructor(
-    @Inject(Datos_Locales)
-    private datos_locales: Datos_Locales
-  ) {}
+  constructor( @Inject(Datos_Locales) private datos_locales: Datos_Locales ) {}
 
   ngOnInit(): void {
-    const edificio = this.datos_locales.obtener_DatoLocal(
-      'edificioSeleccionado'
-    );
-    const salon =
-      this.datos_locales.obtener_DatoLocal('salonSeleccionado');
+    const edificio = this.datos_locales.obtener_DatoLocal('edificioSeleccionado');
+    const salon = this.datos_locales.obtener_DatoLocal('salonSeleccionado');
 
     if (edificio && salon) {
       this.edificioSeleccionado = edificio;
@@ -30,13 +24,8 @@ export class ConfiguracionComponent implements OnInit {
   }
 
   onSubmit() {
-    this.datos_locales.guardar_DatoLocal(
-      'edificioSeleccionado',
-      this.edificioSeleccionado
-    );
-    this.datos_locales.guardar_DatoLocal(
-      'salonSeleccionado',
-      this.salonSeleccionado
-    );
+    this.datos_locales.guardar_DatoLocal('edificioSeleccionado',this.edificioSeleccionado);
+    this.datos_locales.guardar_DatoLocal('salonSeleccionado',this.salonSeleccionado);
   }
+
 }
