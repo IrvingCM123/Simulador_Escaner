@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Inject } from '@angular/core';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { HttpClientModule } from '@angular/common/http';
@@ -20,6 +20,7 @@ import { FirestoreModule } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire/compat';
 import { ConfiguracionComponent } from './configuracion/configuracion.component';
 import { FirestoreService } from './Servicios/FirestoreListas.service';
+import { ConexionService } from './Servicios/Conexion.service';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,6 @@ import { FirestoreService } from './Servicios/FirestoreListas.service';
     ReactiveFormsModule,
     ZXingScannerModule,
     AppRoutingModule,
-    AngularFireModule.initializeApp(environment.firebase),
     AngularFireModule.initializeApp(environment.firebaseListas),
     AngularFirestoreModule,
     CommonModule,
@@ -47,4 +47,14 @@ import { FirestoreService } from './Servicios/FirestoreListas.service';
   providers: [FirestoreService, ConfiguracionComponent, ListasComponent],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(@Inject(ConexionService) private conexionService: ConexionService) {
+    conexionService.getOnlineStatus().subscribe(online => {
+      if (online) {
+        this.conexionService.enviarDatos();
+      }
+    });
+  }
+
+
+}
