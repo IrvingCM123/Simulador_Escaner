@@ -40,7 +40,6 @@ import { ConexionService } from './Servicios/Conexion.service';
     ReactiveFormsModule,
     ZXingScannerModule,
     AppRoutingModule,
-    AngularFireModule.initializeApp(environment.firebase),
     AngularFireModule.initializeApp(environment.firebaseListas),
     AngularFirestoreModule,
     CommonModule,
