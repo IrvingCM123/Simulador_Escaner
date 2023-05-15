@@ -16,6 +16,21 @@ export class FirestoreService {
     private firestore: AngularFirestore,
     @Inject(Datos_Locales) private datos_locales: Datos_Locales
   ) {
+
+    /* let fecha = new Date();
+
+    let diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+    let diaSemana = diasSemana[fecha.getDay()];   console.log('Día de la semana:', diaSemana);
+
+    let horaInicio: any = fecha.getHours();
+    if (horaInicio % 2 == 0) {
+      horaInicio = horaInicio - 1;
+    }
+    let hora_fin = (horaInicio + 2) + ':00' ;
+    horaInicio = horaInicio + ':00';
+
+    let horaCompleta = horaInicio + '-' + hora_fin; */
+
     this.Dia = 'Lunes';
     this.Hora = '11:00-13:00';
     this.Edificio = datos_locales.obtener_DatoLocal('edificioSeleccionado');
@@ -29,7 +44,6 @@ export class FirestoreService {
     if (carrera) {
       const data = carrera.docs.map((doc) => doc.data());
       const data_Carrera: string | any = data[0];
-      console.log(data_Carrera.Carrera)
       return data_Carrera.Carrera;
     } else {
       console.log('No se puede obtener la información de Firestore');
@@ -42,11 +56,9 @@ export class FirestoreService {
 
     let url = '/' + this.Edificio + '/' + this.Salon + '/Horarios/' + this.Dia + '/' + this.Hora + '/';
     const nrc_obtenido = await this.firestore.collection(url).get().toPromise();
-    console.log(nrc_obtenido)
     if (nrc_obtenido) {
       const datos_recibidos = nrc_obtenido.docs.map((datos) => datos.data());
       const nrc_materia: string | any = datos_recibidos[0];
-      console.log(nrc_materia.NRC)
       return nrc_materia.NRC;
     } else {
       console.log('No se pudo obtener la información de Firestore.');

@@ -33,3 +33,4 @@ scanFailure->Emitted when the scanner couldn't decode any result from the media 
 scanComplete->Emitted after any scan attempt, no matter what.
 
         
+git branch diseño refs/heads/develop --force
