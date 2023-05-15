@@ -60,7 +60,6 @@ export class FirestoreService {
 
     if (lista_encontrada) {
       const datos_lista = lista_encontrada.docs.map((alumnos) => alumnos.data());
-      console.log(datos_lista)
       return datos_lista;
     } else {
       console.log('No se pudo obtener la información de Firestore.');
@@ -69,20 +68,29 @@ export class FirestoreService {
   }
 
   async getMaterias() {
-
     let url = '/' + this.Edificio + '/' + this.Salon + '/' + this.Dia + '/' ;
     const materias_obtenidas = await this.firestore.collection(url).get().toPromise();
 
     if (materias_obtenidas) {
       const datos_recibidos = materias_obtenidas.docs.map((datos) => datos.data());
       const materias: string | any = datos_recibidos;
-      console.log(materias)
+
+      materias.sort((a: any, b: any) => {
+        if (a.Horario < b.Horario) {
+          return -1;
+        }
+        if (a.Horario > b.Horario) {
+          return 1;
+        }
+        return 0;
+      });
+
       return materias;
     } else {
       console.log('No se pudo obtener la información de Firestore.');
       return [];
     }
-
   }
+
 
 }

@@ -10,7 +10,6 @@ import { CommonModule } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { CamaraComponent } from './camara/camara.component';
-import { MandarDatosComponent } from './mandar-datos/mandar-datos.component';
 import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { MenuComponent } from './menu';
@@ -26,7 +25,6 @@ import { FirestoreService } from './Servicios/FirestoreListas.service';
   declarations: [
     AppComponent,
     CamaraComponent,
-    MandarDatosComponent,
     MenuComponent,
     ListasComponent,
     ConfiguracionComponent,
