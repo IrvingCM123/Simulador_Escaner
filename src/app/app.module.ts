@@ -21,6 +21,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { ConfiguracionComponent } from './configuracion/configuracion.component';
 import { FirestoreService } from './Servicios/FirestoreListas.service';
 import { ConexionService } from './Servicios/Conexion.service';
+import { Datos_Locales } from './Servicios/DatosLocales.service';
 
 @NgModule({
   declarations: [
@@ -48,10 +49,11 @@ import { ConexionService } from './Servicios/Conexion.service';
   bootstrap: [AppComponent],
 })
 export class AppModule {
-  constructor(@Inject(ConexionService) private conexionService: ConexionService) {
+  constructor(@Inject(ConexionService) private conexionService: ConexionService, private datosLocales: Datos_Locales) {
     conexionService.getOnlineStatus().subscribe(online => {
       if (online) {
         this.conexionService.enviarDatos();
+        this.datosLocales.eliminarDatosAlFinalizarDia();
       }
     });
   }
