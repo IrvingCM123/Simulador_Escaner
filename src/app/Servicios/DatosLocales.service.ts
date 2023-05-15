@@ -5,9 +5,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class Datos_Locales {
-
   private almacenarDatosQRObservable = new Subject<any>();
-
   private Habilitar_Desabilitar_Camara = new BehaviorSubject<boolean>(
     localStorage.getItem('Camara') === 'true'
   );
@@ -27,7 +25,6 @@ export class Datos_Locales {
 
   actualizar_DatoLocal(indice: string, valor: any) {
     localStorage.setItem(indice, JSON.stringify(valor));
-    console.log('a', valor);
   }
 
   guardar_ArregloLocal(indice: string, valor: any): void {
@@ -48,4 +45,13 @@ export class Datos_Locales {
     return JSON.parse(this.obtener_DatoLocal('almacenarDatosQR')) || [];
   }
 
+  eliminarDatosAlFinalizarDia(): void {
+    const ahora = new Date();
+    const finDelDia = new Date(ahora.getFullYear(), ahora.getMonth(), ahora.getDate() + 1, 0, 0, 0);
+    const tiempoRestante = finDelDia.getTime() - ahora.getTime();
+
+    setTimeout(() => {
+      this.eliminar_DatoLocal('almacenarDatosQR');
+    }, tiempoRestante);
+  }
 }
