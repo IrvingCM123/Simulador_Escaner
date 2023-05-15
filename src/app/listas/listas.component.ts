@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { Escanear_Service } from '../Servicios/EscanearQR.service';
 import { FirestoreService } from '../Servicios/FirestoreListas.service';
 import { Datos_Locales } from '../Servicios/DatosLocales.service';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 interface Estructura {
   Matricula: string;
@@ -25,7 +25,8 @@ export class ListasComponent implements OnInit {
 
   constructor(
     private firestoreService: FirestoreService,
-    @Inject(Datos_Locales) private datos_locales: Datos_Locales
+    @Inject(Datos_Locales) private datos_locales: Datos_Locales,
+    private firestore: AngularFirestore,
   ) {}
 
   async ngOnInit() {
@@ -51,5 +52,27 @@ export class ListasComponent implements OnInit {
     );
     return !!buscar;
   }
+
+  enviarDato() {
+    // Obtenemos una referencia a la colección de Firestore donde queremos guardar el dato
+    const coleccion = this.firestore.collection('nombreDeLaColeccion');
+
+    // Creamos el objeto que queremos guardar en Firestore
+    const dato = {
+      nombre: 'Ejemplo',
+      edad: 30,
+      fecha: new Date(),
+    };
+
+    // Enviamos el dato a Firestore
+    coleccion.add(dato)
+      .then(() => {
+        console.log('Dato guardado correctamente en Firestore');
+      })
+      .catch((error) => {
+        console.error('Error al guardar el dato en Firestore: ', error);
+      });
+  }
+
 
 }
