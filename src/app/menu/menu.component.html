@@ -21,10 +21,10 @@
   </section>
 
   <section class="Cuenta">
-    <div class="Cerrar_Sesion">
+    <div class="Boton">
       <button (click)="onSubmit()">
-        <div *ngIf="valor_Camara == true">Encendido</div>
-        <div *ngIf="valor_Camara == false">Apagado</div>
+        <div class="Boton_Prender" *ngIf="valor_Camara == true">Encendido</div>
+        <div class="Boton_Apagar" *ngIf="valor_Camara == false">Apagado</div>
       </button>
     </div>
   </section>

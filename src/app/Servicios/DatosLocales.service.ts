@@ -43,4 +43,9 @@ export class Datos_Locales {
   Habilitar_Desabilitar_Camara_Observable(): Subject<boolean> {
     return this.Habilitar_Desabilitar_Camara;
   }
+
+  obtenerDatosQR(): any[] {
+    return JSON.parse(this.obtener_DatoLocal('almacenarDatosQR')) || [];
+  }
+
 }
