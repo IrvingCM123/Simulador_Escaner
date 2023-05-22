@@ -23,6 +23,9 @@ import { FirestoreService } from './Servicios/FirestoreListas.service';
 import { ConexionService } from './Servicios/Conexion.service';
 import { Datos_Locales } from './Servicios/DatosLocales.service';
 
+import { Subscription, interval } from 'rxjs';
+import { map, takeWhile } from 'rxjs/operators';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,18 +48,24 @@ import { Datos_Locales } from './Servicios/DatosLocales.service';
     AngularFirestoreModule,
     CommonModule,
   ],
-  providers: [FirestoreService, ConfiguracionComponent, ListasComponent],
+  providers: [FirestoreService, ConexionService, Datos_Locales],
   bootstrap: [AppComponent],
 })
 export class AppModule {
-  constructor(@Inject(ConexionService) private conexionService: ConexionService, private datosLocales: Datos_Locales) {
-    conexionService.getOnlineStatus().subscribe(online => {
-      if (online) {
+  private onlineCheckSubscription: Subscription;
+
+  constructor(
+    private conexionService: ConexionService,
+    private datosLocales: Datos_Locales
+  ) {
+    this.onlineCheckSubscription = interval(60000) // Intervalo de 1 minuto (60000 milisegundos)
+      .pipe(
+        map(() => this.conexionService.getOnlineStatus().getValue()), // Obtener el valor actual del BehaviorSubject
+        takeWhile((online) => online) // Continuar mientras haya conexión
+      )
+      .subscribe(() => {
         this.conexionService.enviarDatos();
         this.datosLocales.eliminarDatosAlFinalizarDia();
-      }
-    });
+      });
   }
-
-
 }
