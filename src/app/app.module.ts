@@ -58,7 +58,7 @@ export class AppModule {
     private conexionService: ConexionService,
     private datosLocales: Datos_Locales
   ) {
-    this.onlineCheckSubscription = interval(60000) // Intervalo de 1 minuto (60000 milisegundos)
+    this.onlineCheckSubscription = interval(60000)
       .pipe(
         map(() => this.conexionService.getOnlineStatus().getValue()), // Obtener el valor actual del BehaviorSubject
         takeWhile((online) => online) // Continuar mientras haya conexión
