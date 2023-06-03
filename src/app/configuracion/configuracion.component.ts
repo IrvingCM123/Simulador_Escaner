@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FirestoreService } from '../Servicios/FirestoreListas.service';
 import { Datos_Locales } from '../Servicios/DatosLocales.service';
-
+import { Router } from '@angular/router';
 interface Estructura {
   Matricula: string;
   Nombre: string;
@@ -27,7 +27,7 @@ export class ConfiguracionComponent implements OnInit {
   listaAsistencia: any[] = [];
 
   constructor( @Inject(Datos_Locales) private datos_locales: Datos_Locales,
-  private firestoreService: FirestoreService ) {}
+  private firestoreService: FirestoreService, private router: Router) {}
 
   async ngOnInit() {
     const edificio = this.datos_locales.obtener_DatoLocal('edificioSeleccionado');
@@ -50,6 +50,9 @@ export class ConfiguracionComponent implements OnInit {
   onSubmit() {
     this.datos_locales.guardar_DatoLocal('edificioSeleccionado',this.edificioSeleccionado);
     this.datos_locales.guardar_DatoLocal('salonSeleccionado',this.salonSeleccionado);
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([this.router.url]);
+    });
   }
 
 }
