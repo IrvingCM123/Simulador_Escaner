@@ -45,18 +45,9 @@ import { Datos_Locales } from './Servicios/DatosLocales.service';
     AngularFirestoreModule,
     CommonModule,
   ],
-  providers: [FirestoreService, ConfiguracionComponent, ListasComponent],
+  providers: [FirestoreService, ConexionService, Datos_Locales],
   bootstrap: [AppComponent],
 })
 export class AppModule {
-  constructor(@Inject(ConexionService) private conexionService: ConexionService, private datosLocales: Datos_Locales) {
-    conexionService.getOnlineStatus().subscribe(online => {
-      if (online) {
-        this.conexionService.enviarDatos();
-        this.datosLocales.eliminarDatosAlFinalizarDia();
-      }
-    });
-  }
-
 
 }

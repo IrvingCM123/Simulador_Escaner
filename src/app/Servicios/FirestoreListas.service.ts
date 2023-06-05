@@ -53,12 +53,13 @@ export class FirestoreService {
   }
 
   async getNrcByHorario() {
-
+    console.log(this.Edificio, this.Salon, this.Dia, this.Hora)
     let url = '/' + this.Edificio + '/' + this.Salon + '/Horarios/' + this.Dia + '/' + this.Hora + '/';
     const nrc_obtenido = await this.firestore.collection(url).get().toPromise();
     if (nrc_obtenido) {
       const datos_recibidos = nrc_obtenido.docs.map((datos) => datos.data());
       const nrc_materia: string | any = datos_recibidos[0];
+      console.log( nrc_materia.NRC)
       return nrc_materia.NRC;
     } else {
       console.log('No se pudo obtener la información de Firestore.');
@@ -70,10 +71,12 @@ export class FirestoreService {
   async getListaAsistencia(nrc: string, carrera: string) {
 
     let url = '/' + carrera + '/Materias/' + nrc;
+    console.log(url)
     const lista_encontrada = await this.firestore.collection(url).get().toPromise();
 
     if (lista_encontrada) {
       const datos_lista = lista_encontrada.docs.map((alumnos) => alumnos.data());
+      console.log(datos_lista)
       return datos_lista;
     } else {
       console.log('No se pudo obtener la información de Firestore.');
