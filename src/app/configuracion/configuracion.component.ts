@@ -50,9 +50,7 @@ export class ConfiguracionComponent implements OnInit {
   onSubmit() {
     this.datos_locales.guardar_DatoLocal('edificioSeleccionado',this.edificioSeleccionado);
     this.datos_locales.guardar_DatoLocal('salonSeleccionado',this.salonSeleccionado);
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigate([this.router.url]);
-    });
+    window.location.reload();
   }
 
 }
